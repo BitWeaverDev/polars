@@ -945,6 +945,7 @@ def test_rolling_by_temporal_null_min_samples_27661() -> None:
 def test_rolling_window_size_zero_23434() -> None:
     """
     window_size=0 means every position looks at zero elements.
+
     Each result must equal the aggregation of an empty series for that dtype.
     """
     s_int = pl.Series([1, 2, 3, 4, 5], dtype=pl.Int64)
