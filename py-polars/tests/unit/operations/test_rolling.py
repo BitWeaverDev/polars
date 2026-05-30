@@ -994,6 +994,14 @@ def test_rolling_window_size_zero_23434() -> None:
         s_float.rolling_skew(window_size=0),
         pl.Series([None] * n, dtype=pl.Float64),
     )
+    assert_series_equal(
+        s_float.rolling_kurtosis(window_size=0),
+        pl.Series([None] * n, dtype=pl.Float64),
+    )
+    assert_series_equal(
+        s_float.rolling_rank(window_size=0),
+        pl.Series([None] * n, dtype=pl.Float64),
+    )
 
     # --- center=True uses det_offsets_center, must behave identically ---
     assert_series_equal(
@@ -1002,6 +1010,10 @@ def test_rolling_window_size_zero_23434() -> None:
     )
     assert_series_equal(
         s_float.rolling_mean(window_size=0, center=True),
+        pl.Series([None] * n, dtype=pl.Float64),
+    )
+    assert_series_equal(
+        s_float.rolling_median(window_size=0, center=True),
         pl.Series([None] * n, dtype=pl.Float64),
     )
 
@@ -1025,6 +1037,6 @@ def test_rolling_window_size_zero_23434() -> None:
         result["mean"], pl.Series("mean", [None, None, None], dtype=pl.Float64)
     )
 
-    # --- min_periods > window_size is rejected regardless of window_size value ---
+    # --- min_samples > window_size is rejected regardless of window_size value ---
     with pytest.raises(InvalidOperationError):
-        s_int.rolling_sum(window_size=0, min_periods=1)
+        s_int.rolling_sum(window_size=0, min_samples=1)
